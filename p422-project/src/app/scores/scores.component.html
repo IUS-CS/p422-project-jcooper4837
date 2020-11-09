@@ -1,0 +1,26 @@
+<div *ngIf="!selectedLevel">
+    No level selected!
+</div>
+
+<div *ngIf="selectedLevel">
+    <h1>{{selectedLevel[0].level}}</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">User</th>
+            <th scope="col">Score</th>
+            <th scope="col">Date</th>
+            <th scope="col">Proof</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let entry of selectedLevel">
+            <td>{{entry.user}}</td>
+            <td>{{entry.score}}</td>
+            <td>{{entry.date}}</td>
+            <td>{{entry.proof}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
