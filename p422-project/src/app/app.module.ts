@@ -8,6 +8,8 @@ import { GamesComponent } from './games/games.component';
 import { LevelsComponent } from './levels/levels.component';
 import { ScoresComponent } from './scores/scores.component';
 import { HomeComponent } from './home/home.component';
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,10 @@ import { HomeComponent } from './home/home.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Game, GameDataService } from '../game-data.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { GameDataService } from '../game-data.service';
+import { Game } from '../models/game';
+import {Observable} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-games',
@@ -8,19 +12,25 @@ import { Game, GameDataService } from '../game-data.service';
   styleUrls: ['./games.component.css']
 })
 export class GamesComponent implements OnInit {
-  gameList: Game[];
+  selectedGames: Observable<Game[]>;
 
   constructor(
     private gameDataService: GameDataService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
-    this.getList();
+    this.selectedGames = this.route.paramMap.pipe(
+      switchMap((params: ParamMap): Observable<Game[]> => {
+        return this.gameDataService.getAllGames();
+      })
+    );
   }
 
-  public getList(): void {
+  /*public getList(): void {
     this.gameList = this.gameDataService.getAllGames();
-  }
+  }*/
 
 }

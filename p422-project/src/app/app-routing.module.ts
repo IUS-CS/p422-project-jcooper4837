@@ -7,8 +7,8 @@ import { ScoresComponent } from './scores/scores.component';
 
 const routes: Routes = [
   { path: 'games', component: GamesComponent},
-  { path: 'levels', component: LevelsComponent},
-  { path: 'scores', component: ScoresComponent},
+  { path: ':game', component: LevelsComponent},
+  { path: ':game/:level', component: ScoresComponent},
   { path: '', component: HomeComponent},
 ];
 

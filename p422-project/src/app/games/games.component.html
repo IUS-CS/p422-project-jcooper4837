@@ -7,7 +7,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let entry of gameList">
+    <tr *ngFor="let entry of selectedGames | async">
         <td>{{entry.name}}</td>
     </tr>
     </tbody>

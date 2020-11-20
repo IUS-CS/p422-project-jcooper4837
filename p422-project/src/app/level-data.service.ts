@@ -1,34 +1,28 @@
 import { getSourceFileOrError } from '@angular/compiler-cli/src/ngtsc/file_system';
 import { Injectable } from '@angular/core';
-import { Score, ScoreDataService } from './score-data.service';
-
-export class Level {
-  game: string;
-  name: string;
-  isScore: boolean;
-  isAscending: boolean;
-}
+import { ScoreDataService } from './score-data.service';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import { Level } from './models/level';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LevelDataService {
-  private levels: Level[] = [{
+  /*private levels: Level[] = [{
     game: 'Game-1',
     name: 'Level-1',
     isScore: true,
     isAscending: true
-  }]
+  }]*/
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  public getLevel(name: string): Level {
-    let res = this.levels.find(c => c.name.toLowerCase() === name.toLowerCase());
-    return res;
-  }
+  private url = '/v1';
 
-  public getAllLevels(name: string): Level[] {
-    let res = this.levels.filter(c => c.game.toLowerCase() === name.toLowerCase());
-    return res;
+  public getAllLevels(game: string): Observable<Level[]> {
+    return this.http.get<Level[]>(`${this.url}/${game}`);
   }
 }

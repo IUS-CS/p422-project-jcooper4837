@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
-
-export class Game {
-  name: string;
-  platforms: string[];
-  release: string;
-}
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import { Game } from './models/game';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameDataService {
-  private games: Game[] = [{
+  /*private games: Game[] = [{
     name: 'Game-1',
     platforms: [
       'Xbox-One',
@@ -19,17 +16,15 @@ export class GameDataService {
       'PC',
     ],
     release: "2020-10-31"
-  }]
+  }]*/
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  public getGame(name: string): Game {
-    let res = this.games.find(c => c.name.toLowerCase() === name.toLowerCase());
-    return res;
-  }
+  private url = '/v1';
 
-  public getAllGames(): Game[] {
-    let res = this.games;
-    return res;
+  public getAllGames(): Observable<Game[]> {
+    return this.http.get<Game[]>(`${this.url}/games`);
   }
 }

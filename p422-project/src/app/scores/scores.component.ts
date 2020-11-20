@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { GameDataService } from '../game-data.service';
 import { LevelDataService } from '../level-data.service';
-import { Score, ScoreDataService } from '../score-data.service';
+import { ScoreDataService } from '../score-data.service';
+import { Score } from '../models/score';
+import {Observable} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-scores',
@@ -9,23 +14,33 @@ import { Score, ScoreDataService } from '../score-data.service';
   styleUrls: ['./scores.component.css']
 })
 export class ScoresComponent implements OnInit {
+  selectedGameName: string;
   selectedLevelName: string;
-  selectedLevel: Score[];
+  selectedScores: Observable<Score[]>;
 
   constructor(
     private scoreDataService: ScoreDataService,
     private levelDataService: LevelDataService,
-    private router: Router
+    private gameDataService: GameDataService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location
     ) { }
 
   ngOnInit(): void {
-    this.selectLevel('Level-1');
+    this.selectedScores = this.route.paramMap.pipe(
+      switchMap((params: ParamMap): Observable<Score[]> => {
+        this.selectedGameName = params.get('game');
+        this.selectedLevelName = params.get('level');
+        return this.scoreDataService.getAllScores(params.get('game'), params.get('level'));
+      })
+    );
   }
 
-  public selectLevel(name: string): void {
-    this.selectedLevelName = this.levelDataService.getLevel(name).name;
-    this.selectedLevel = this.scoreDataService.getAllScores(this.selectedLevelName);
-    this.selectedLevel = this.selectedLevel.sort((a, b) => b.score - a.score);
-  }
+  /*public selectLevel(name: string): void {
+    this.selectedScores = this.scoreDataService.getAllScores(this.selectedGameName, this.selectedLevelName);
+    console.log(this.selectedGameName, this.selectedLevelName);
+    //this.selectedScores = this.selectedScores.sort((a, b) => b.score - a.score);
+  }*/
 
 }

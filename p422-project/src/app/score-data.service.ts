@@ -1,20 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Level } from './level-data.service';
-
-export class Score {
-  level: string;
-  user: string;
-  score: number;
-  date: string;
-  proof: string;
-  comment: string;
-}
+import { Level } from './models/level';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import { Score } from './models/score';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScoreDataService {
-  private scores: Score[] = [{
+  /*private scores: Score[] = [{
     level: 'Level-1',
     user: 'username',
     score: 1000,
@@ -45,12 +39,15 @@ export class ScoreDataService {
     date: '2017-07-07',
     proof: 'Live Video',
     comment: 'bad will improve later',
-  }];
+  }];*/
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  public getAllScores(name: string): Score[] {
-    let res = this.scores.filter(c => c.level.toLowerCase() === name.toLowerCase());
-    return res;
+  private url = '/v1';
+
+  public getAllScores(game: string, level: string): Observable<Score[]> {
+    return this.http.get<Score[]>(`${this.url}/${game}/${level}`);
   }
 }

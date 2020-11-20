@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { GameDataService } from '../game-data.service';
-import { Level, LevelDataService } from '../level-data.service';
+import { LevelDataService } from '../level-data.service';
+import { Level } from '../models/level';
+import {Observable} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-levels',
@@ -10,22 +14,29 @@ import { Level, LevelDataService } from '../level-data.service';
 })
 export class LevelsComponent implements OnInit {
   selectedGameName: string;
-  selectedGame: Level[];
+  selectedLevels: Observable<Level[]>;
 
   constructor(
     private levelDataService: LevelDataService,
     private gameDataService: GameDataService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
-    this.selectGame('Game-1');
+    this.selectedLevels = this.route.paramMap.pipe(
+      switchMap((params: ParamMap): Observable<Level[]> => {
+        this.selectedGameName = params.get('game');
+        return this.levelDataService.getAllLevels(params.get('game'));
+      })
+    );
   }
 
-  public selectGame(name: string): void {
+  /*public selectGame(name: string): void {
     this.selectedGameName = this.gameDataService.getGame(name).name;
-    this.selectedGame = this.levelDataService.getAllLevels(this.selectedGameName);
-    this.selectedGame = this.selectedGame.sort();
-  }
+    this.selectedLevels = this.levelDataService.getAllLevels(this.selectedGameName);
+    this.selectedLevels = this.selectedGame.sort();
+  }*/
 
 }
