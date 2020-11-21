@@ -13,7 +13,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let entry of selectedLevels | async">
-            <td>{{entry.name}}</td>
+            <td><a [routerLink]="[entry.name]">{{entry.name}}</a></td>
         </tr>
         </tbody>
     </table>

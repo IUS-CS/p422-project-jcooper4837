@@ -5,7 +5,7 @@ import { LevelDataService } from '../level-data.service';
 import { ScoreDataService } from '../score-data.service';
 import { Score } from '../models/score';
 import {Observable} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {switchMap, map} from 'rxjs/operators';
 import {Location} from '@angular/common';
 
 @Component({
@@ -17,6 +17,7 @@ export class ScoresComponent implements OnInit {
   selectedGameName: string;
   selectedLevelName: string;
   selectedScores: Observable<Score[]>;
+  scores: Score[];
 
   constructor(
     private scoreDataService: ScoreDataService,
@@ -35,6 +36,10 @@ export class ScoresComponent implements OnInit {
         return this.scoreDataService.getAllScores(params.get('game'), params.get('level'));
       })
     );
+    this.selectedScores.subscribe(r => {
+      r.sort((a, b) => b.score - a.score)
+      this.scores = r;
+    })
   }
 
   /*public selectLevel(name: string): void {

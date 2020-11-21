@@ -8,7 +8,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let entry of selectedGames | async">
-        <td>{{entry.name}}</td>
+        <td><a [routerLink]="['/', entry.name]">{{entry.name}}</a></td>
     </tr>
     </tbody>
 </table>

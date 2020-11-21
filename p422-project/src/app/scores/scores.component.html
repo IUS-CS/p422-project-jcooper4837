@@ -12,14 +12,17 @@
             <th scope="col">Score</th>
             <th scope="col">Date</th>
             <th scope="col">Proof</th>
+            <th scope="col">Comment</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let entry of selectedScores | async">
+        <tr *ngFor="let entry of scores">
             <td>{{entry.user}}</td>
             <td>{{entry.score}}</td>
             <td>{{entry.date}}</td>
             <td>{{entry.proof}}</td>
+            <td *ngIf="entry.comment"><img src="http://placekitten.com/150/150" width="20" height="20" [title]="[entry.comment]" [alt]="[entry.comment]"/></td>
+            <td *ngIf="!entry.comment"></td>
         </tr>
         </tbody>
     </table>
