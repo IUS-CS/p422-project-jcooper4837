@@ -4,13 +4,63 @@
 
 <div *ngIf="selectedScores">
     <h1>{{selectedLevelName}}</h1>
-
+    <button (click)="submitNew = !submitNew" class="btn btn-dark" type="button">New Score</button>
+    <form *ngIf="submitNew" [formGroup]="model" (ngSubmit)="onSubmit()">
+      <br>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col"><input id="newName" type="text" class="form-control" formControlName="newUser"></th>
+        </tr>
+        <tr *ngIf="level.isScore">
+          <th scope="col">Score</th>
+          <th scope="col"><input id="newScore" type="text" class="form-control" formControlName="newScore"></th>
+        </tr>
+        <tr *ngIf="!level.isScore">
+          <th scope="col">Hr</th>
+          <th scope="col"><input id="newHr" type="text" class="form-control" formControlName="newHr"></th>
+          <th scope="col">Min</th>
+          <th scope="col"><input id="newMin" type="text" class="form-control" formControlName="newMin"></th>
+          <th scope="col">Sec</th>
+          <th scope="col"><input id="newSec" type="text" class="form-control" formControlName="newSec"></th>
+          <th scope="col">Mil</th>
+          <th scope="col"><input id="newMil" type="text" class="form-control" formControlName="newMil"></th>
+        </tr>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col"><input id="newDate" type="text" class="form-control" formControlName="newDate"></th>
+        </tr>
+        <tr>
+          <th scope="col">Platform</th>
+          <th scope="col"><input id="newPlatform" type="text" class="form-control" formControlName="newPlatform"></th>
+        </tr>
+        <tr>
+          <th scope="col">Proof</th>
+          <th scope="col"><input id="newProof" type="text" class="form-control" formControlName="newProof"></th>
+        </tr>
+        <tr>
+          <th scope="col">Link</th>
+          <th scope="col"><input id="newLink" type="text" class="form-control" formControlName="newLink"></th>
+        </tr>
+        <tr>
+          <th scope="col">Comment</th>
+          <th scope="col"><input id="newComment" type="text" class="form-control" formControlName="newComment"></th>
+        </tr>
+        </thead>
+      </table>
+      <button class="btn btn-primary" type="submit" [disabled]="!model.valid">Submit</button>
+      <div *ngIf="status" [class.alert-danger]="statusIsError" class="alert">{{status}}</div>
+    </form>
+    {{sortScores()}}
+    <br><br>
     <table class="table">
         <thead>
         <tr>
             <th scope="col">User</th>
             <th scope="col">Score</th>
             <th scope="col">Date</th>
+            <th scope="col">Platform</th>
             <th scope="col">Proof</th>
             <th scope="col">Comment</th>
         </tr>
@@ -18,10 +68,12 @@
         <tbody>
         <tr *ngFor="let entry of scores">
             <td>{{entry.user}}</td>
-            <td>{{entry.score}}</td>
+            <td>{{parseScore(entry.score)}}</td>
             <td>{{entry.date}}</td>
-            <td>{{entry.proof}}</td>
-            <td *ngIf="entry.comment"><img src="http://placekitten.com/150/150" width="20" height="20" [title]="[entry.comment]" [alt]="[entry.comment]"/></td>
+            <td>{{entry.platform}}</td>
+            <td *ngIf="entry.link"><a href="{{entry.link}}" target="_blank">{{entry.proof}}</a></td>
+            <td *ngIf="!entry.link">{{entry.proof}}</td>
+            <td *ngIf="entry.comment"><img src="favicon.ico" width="20" height="20" [title]="[entry.comment]" [alt]="[entry.comment]"/></td>
             <td *ngIf="!entry.comment"></td>
         </tr>
         </tbody>

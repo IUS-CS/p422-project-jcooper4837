@@ -18,7 +18,9 @@ const ScoreSchema = mongoose.Schema({
         required: true
     },
     date: String,
+    platform: String,
     proof: String,
+    link: String,
     comment: String
 });
 

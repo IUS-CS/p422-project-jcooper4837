@@ -50,4 +50,8 @@ export class ScoreDataService {
   public getAllScores(game: string, level: string): Observable<Score[]> {
     return this.http.get<Score[]>(`${this.url}/${game}/${level}`);
   }
+
+  public saveSubmission(game: string, level: string, submission: Score): Observable<any> {
+    return this.http.post(`${this.url}/${game}/${level}`, submission);
+  }
 }

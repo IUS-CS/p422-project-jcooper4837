@@ -12,5 +12,16 @@ module.exports = {
             }
             res.json(scores);
         });
+    },
+    submit: function (req, res) {
+        const sub = new Score(req.body);
+        sub.save()
+            .then(() => {
+                res.json({status: 'success'})
+            })
+            .catch(err => {
+                res.status(400);
+                res.json(err);
+            });
     }
 };

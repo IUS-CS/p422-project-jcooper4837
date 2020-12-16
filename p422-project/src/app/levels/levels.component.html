@@ -3,8 +3,10 @@
 </div>
 
 <div *ngIf="selectedLevels">
+    <img [src]="[path]" width="250" height="125" class="float-right" [alt]="[game.name]"/>
     <h1>{{selectedGameName}}</h1>
-
+    <h6>Release: &nbsp;{{game.release}}</h6>
+    <h6>Platforms: &nbsp;<span *ngFor="let entry of game.platforms">{{entry}} &nbsp;&nbsp;</span></h6>
     <table class="table">
         <thead>
         <tr>
@@ -12,7 +14,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let entry of selectedLevels | async">
+        <tr *ngFor="let entry of levels">
             <td><a [routerLink]="[entry.name]">{{entry.name}}</a></td>
         </tr>
         </tbody>

@@ -11,8 +11,15 @@ routes.route('/games')
 routes.route('/:game/')
     .get(levels.all)
 
+routes.route('/:game/2')
+    .get(games.details)
+
 routes.route('/:game/:level')
     .get(scores.all)
+    .post(scores.submit)
+
+routes.route('/:game/:level/2')
+    .get(levels.details)
 
 routes.route('/')
 

@@ -27,4 +27,8 @@ export class GameDataService {
   public getAllGames(): Observable<Game[]> {
     return this.http.get<Game[]>(`${this.url}/games`);
   }
+
+  public getGame(game: string): Observable<Game> {
+    return this.http.get<Game>(`${this.url}/${game}/2`);
+  }
 }
