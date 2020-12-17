@@ -29,4 +29,8 @@ export class LevelDataService {
   public getLevel(game: string, level: string): Observable<Level> {
     return this.http.get<Level>(`${this.url}/${game}/${level}/2`);
   }
+
+  public getFullLevels(user: string): Observable<Level[]> {
+    return this.http.get<Level[]>(`${this.url}/${user}/user/4`)
+  }
 }

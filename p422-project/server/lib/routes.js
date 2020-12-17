@@ -21,6 +21,12 @@ routes.route('/:game/:level')
 routes.route('/:game/:level/2')
     .get(levels.details)
 
+routes.route('/:user/user/3')
+    .get(scores.user)
+
+routes.route('/:user/user/4')
+    .get(levels.full)
+
 routes.route('/')
 
 module.exports = routes;

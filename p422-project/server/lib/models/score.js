@@ -28,6 +28,10 @@ ScoreSchema.query.byGameAndLevel = function(game, level) {
     return this.where({game: game, level: level});
 }
 
+ScoreSchema.query.byUser = function(user) {
+    return this.where({user: user});
+}
+
 const Score = mongoose.model('Score', ScoreSchema);
 
 module.exports = Score;

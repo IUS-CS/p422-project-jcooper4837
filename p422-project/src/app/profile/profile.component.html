@@ -1,0 +1,28 @@
+<h1>{{selectedUserName}}</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Game</th>
+        <th scope="col">Level</th>
+        <th scope="col">Score</th>
+        <th scope="col">Date</th>
+        <th scope="col">Platform</th>
+        <th scope="col">Proof</th>
+        <th scope="col">Comment</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--{{getLevelStats()}}-->
+    <tr *ngFor="let entry of selectedScores | async; let i = index">
+        <td>{{entry.game}}</td>
+        <td>{{entry.level}}</td>
+        <td>{{parseScore(entry.score, i)}}</td>
+        <td>{{entry.date}}</td>
+        <td>{{entry.platform}}</td>
+        <td *ngIf="entry.link"><a href="{{entry.link}}" target="_blank">{{entry.proof}}</a></td>
+        <td *ngIf="!entry.link">{{entry.proof}}</td>
+        <td *ngIf="entry.comment"><img src="favicon.ico" width="20" height="20" [title]="[entry.comment]" [alt]="[entry.comment]"/></td>
+        <td *ngIf="!entry.comment"></td>
+    </tr>
+    </tbody>
+</table>

@@ -23,5 +23,15 @@ module.exports = {
             }
             res.json(level);
         });
+    },
+    full: function (req, res) {
+        Level.find().exec((err, level) => {
+            if (err) {
+                res.status(500);
+                res.json(err);
+                return;
+            }
+            res.json(level);
+        })
     }
 };

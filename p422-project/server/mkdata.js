@@ -18,6 +18,19 @@ const ultimate_gamer000 = new Score
 
 const ultimate_gamer001 = new Score
 ({
+    game: 'Mario Kart Wii',
+    level: 'Moo Moo Meadows',
+    user: 'ultimate_gamer',
+    score: 82436,
+    date: '2017-07-11',
+    platform: 'Wii',
+    proof: 'Picture',
+    link: '',
+    comment: 'improvable',
+});
+
+const ultimate_gamer002 = new Score
+({
     game: 'Super Mario 64',
     level: 'Bob-omb Battlefield',
     user: 'ultimate_gamer',
@@ -27,6 +40,19 @@ const ultimate_gamer001 = new Score
     proof: 'Live Video',
     link: '',
     comment: 'cool',
+});
+
+const ultimate_gamer003 = new Score
+({
+    game: 'Super Mario 64',
+    level: 'Whomp\'s Fortress',
+    user: 'ultimate_gamer',
+    score: 192,
+    date: '2018-02-10',
+    platform: 'N64',
+    proof: 'None',
+    link: '',
+    comment: '',
 });
 
 const username000 = new Score({
@@ -365,8 +391,10 @@ async function save() {
     await game001level014.save();
 
     await ultimate_gamer000.save();
-    await username000.save();
     await ultimate_gamer001.save();
+    await ultimate_gamer002.save();
+    await ultimate_gamer003.save();
+    await username000.save();
     await username001.save();
 }
 

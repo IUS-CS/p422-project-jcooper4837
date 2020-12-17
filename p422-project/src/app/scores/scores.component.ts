@@ -70,17 +70,11 @@ export class ScoresComponent implements OnInit {
         return this.gameDataService.getGame(params.get('game'));
       })
     );
-    this.selectedGame.subscribe(r => {
-      this.game = r;
-    });
     this.selectedLevel = this.route.paramMap.pipe(
       switchMap((params: ParamMap): Observable<Level> => {
         return this.levelDataService.getLevel(params.get('game'), params.get('level'));
       })
     );
-    this.selectedLevel.subscribe(r => {
-      this.level = r;
-    });
     this.selectedScores = this.route.paramMap.pipe(
       switchMap((params: ParamMap): Observable<Score[]> => {
         this.selectedGameName = params.get('game');
@@ -88,10 +82,16 @@ export class ScoresComponent implements OnInit {
         return this.scoreDataService.getAllScores(params.get('game'), params.get('level'));
       })
     );
-    this.selectedScores.subscribe(r => {
-      this.scores = r;
+    this.selectedGame.subscribe(r => {
+      this.game = r;
+      this.selectedLevel.subscribe(r => {
+        this.level = r;
+        this.selectedScores.subscribe(r => {
+          this.scores = r;
+          this.sortScores();
+        });
+      });
     });
-    this.sortScores();
   }
 
   public sortScores(): void {
